@@ -26,9 +26,9 @@ int main() {
       c = fgetc(f1);
       if (c == '\n') {
         blankline++;
-        fseek(f1, -1, SEEK_CUR);
       }
     }
+    c=fgetc(c);
   }
  
  printf("Number of sentences ending with semi colon: %d\nNumber of blank sentences: %d\nNumber of blank spaces: %d", semi, blankline, blankspace);
