@@ -21,7 +21,8 @@ int main() {
     printf("\nClient Error");
     exit(1);
   }
-  int n, m, k = 0;
+  int n, m;
+  int k = 0;
   printf("Enter number of rows: ");
   scanf("%d", & n);
   printf("Enter number of columns: ");
