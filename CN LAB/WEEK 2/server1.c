@@ -25,7 +25,7 @@ int main() {
   int socket_id = socket(AF_INET, SOCK_STREAM, 0);
   struct sockaddr_in serveraddress;
   serveraddress.sin_family = AF_INET;
-  serveraddress.sin_addr.s_addr = inet_addr("172.16.57.199"); // Bind to all available interfaces
+  serveraddress.sin_addr.s_addr = inet_addr("172.16.57.199"); 
   serveraddress.sin_port = htons(PORTNO);
 
   bind(socket_id, (struct sockaddr * ) & serveraddress, sizeof(serveraddress));
