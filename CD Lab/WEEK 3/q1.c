@@ -2,20 +2,28 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+
 typedef struct Token {
-  char token_name[50];
-  int row;
-  int col;
-}
-Token;
+   char token_name[50];
+   int row;
+   int col;
+}Token;
 
-char *logicalOperators[] = {"&&", "||", "!"};
+char *specialSymbols[] = {
+    "+", "-", "*", "/", "=", "==", "<", "<=", ">", ">=", "<>", "(", ")", "{", "}", "[", "]", ",", ";", ":", ".", "&", "|", "~", "^", "%"
+};
 
-char *keywords[] = {"auto", "break", "case", "char", "const", "continue", "default",
+char *logicalOperators[] = {
+    "&&", "||", "!"
+};
+
+char *keywords[] = {
+    "auto", "break", "case", "char", "const", "continue", "default",
     "do", "double", "else", "enum", "extern", "float", "for", "goto",
     "if", "int", "long", "register", "return", "short", "signed",
     "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned",
-    "void", "volatile", "while"};
+    "void", "volatile", "while"
+};
 Token arr[100];
 int k = 0;
 
@@ -24,6 +32,16 @@ void initToken(char name[], int r, int c) {
   arr[k].row = r;
   arr[k].col = c;
   k++;
+}
+
+int isSpecialSymbol(char * word) {
+  int numSpecialSymbols = sizeof(specialSymbols) / sizeof(specialSymbols[0]);
+  for (int i = 0; i < numSpecialSymbols; i++) {
+    if (strcmp(word, specialSymbols[i]) == 0) {
+      return 1; // It's a special symbol
+    }
+  }
+  return 0; // Not a special symbol
 }
 
 int isKeyword(char * word) {
@@ -126,6 +144,7 @@ void isAssignmentop(char s[], int row) {
         initToken("ASSIGN:/", row, i + 1);
       }
     }
+
   }
 }
 
@@ -146,10 +165,20 @@ int isValidIdentifier(char * word) {
   }
   for (int i = 1; i < len; i++) {
     if (!isalnum(word[i]) && word[i] != '_') {
-      return 0; 
+      return 0; // Invalid character in the identifier
     }
   }
-  return 1; 
+  return 1; // Valid identifier
+}
+
+int isNumericalConstant(char * word) {
+  int len = strlen(word);
+  for (int i = 0; i < len; i++) {
+    if (!isdigit(word[i]) && word[i] != '.') {
+      return 0; // Not a numerical constant
+    }
+  }
+  return 1; // Numerical constant
 }
 
 void identifyIdentifiers(char s[], int row) {
@@ -176,20 +205,25 @@ int main() {
     isAssignmentop(line, r);
     isStringLiteral(line, r);
     identifyIdentifiers(line, r);
+
     char * token = strtok(line, " \t\n");
     while (token != NULL) {
       if (isKeyword(token)) {
         initToken("KEYWORD", r, (int)(token - line) + 1);
       } else if (isLogicalOperator(token)) {
         initToken("LOGICAL_OPERATOR", r, (int)(token - line) + 1);
+      } else if (isSpecialSymbol(token)) {
+        initToken("SPECIAL_SYMBOL", r, (int)(token - line) + 1);
       }
       token = strtok(NULL, " \t\n");
     }
+
     r++;
   }
 
   for (int i = 0; i < k; i++) {
     printf("<%s, %d, %d>\n", arr[i].token_name, arr[i].row, arr[i].col);
   }
+
   fclose(f1);
 }
