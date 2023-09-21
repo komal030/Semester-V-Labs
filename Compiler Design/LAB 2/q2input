@@ -1,0 +1,22 @@
+
+#include<stdio.h>
+#define cont 20
+void main()
+{
+#define rfy
+FILE *fopen(), *fp;
+int c ;
+fp = fopen( “prog.c”, “r” ); //Comment
+c = getc( fp ) ;
+while ( c
+!=
+EOF )
+{
+putchar( c );
+c = getc ( fp );
+}
+/*multiline
+comment */
+fclose(
+fp );
+}
