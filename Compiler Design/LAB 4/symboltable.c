@@ -121,9 +121,8 @@ void Numerical(char line[], int row) {
   removeString(line, arr);
   for (int i = 0; i < strlen(arr); i++) {
     char word[20];
-    int k = 0, start;
+    int k = 0, start=i;
     while (isdigit(arr[i])) {
-      start = i;
       word[k++] = arr[i++];
     }
 
@@ -180,8 +179,6 @@ void SpecialSymbol(char line[], int row) {
       makeToken("[", "Special Symbol", row, i);
     if (ch == ']')
       makeToken("]", "Special Symbol", row, i);
-    if (ch == ']')
-      makeToken("{", "Special Symbol", row, i);
     if (ch == '{')
       makeToken("{", "Special Symbol", row, i);
     if (ch == '}')
@@ -195,7 +192,6 @@ void StringLiteral(char line[], int row) {
   for (int i = 0; i < strlen(line); i++) {
     char word[100];
     int k = 0;
-
     if (line[i] == '"') {
       int start = i;
       i++;
