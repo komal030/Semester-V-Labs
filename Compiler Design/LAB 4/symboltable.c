@@ -224,8 +224,8 @@ void Logical(char line[], int row) {
 typedef struct table {
   char lex_name[100];
   char lex_type[100];
-}
-TABLE;
+}TABLE;
+
 TABLE table[100009];
 
 int hashfunc(TOKEN t) {
@@ -233,16 +233,11 @@ int hashfunc(TOKEN t) {
   int m = 100009;
   char temp[30];
   strcpy(temp, t.name);
-  //printf("%s",temp);
   long sum = 0;
   for (int i = 0; i < strlen(temp); i++) {
     sum = sum + (int) temp[i] * pow(p, i);
   }
   int hash = sum % m;
-  if (hash < 0 || hash >= 100009) {
-    printf("%d Error: Invalid hash value generated!\n", hash);
-    exit(1); // Exit the program due to error
-  }
   return hash;
 }
 
