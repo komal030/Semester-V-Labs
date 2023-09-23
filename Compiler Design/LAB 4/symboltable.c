@@ -9,8 +9,8 @@ typedef struct token {
   char type[100];
   int row;
   int col;
-}
-TOKEN;
+}TOKEN;
+
 char keywords[][32] = {
     "auto", "break", "case", "char", "const", "continue", "default", "do",
     "double", "else", "enum", "extern", "float", "for", "goto", "if",
@@ -90,12 +90,13 @@ void Keyword(char line[], int row) {
   removeString(line, arr);
 
   char * word = strtok(arr, " \n");
-  int start = 0;
+  int start = 1;
   while (word != NULL) {
-
     if (isKeyword(word))
+    {
       makeToken(word, "Keyword", row, start);
-    start = start + strlen(word);
+      }
+       start = start + strlen(word)+1;
     word = strtok(NULL, " \n");
   }
 }
@@ -104,11 +105,13 @@ void Identifier(char line[], int row) {
   char arr[256];
   removeString(line, arr);
   char * word = strtok(arr, " \n");
-  int start = 0;
+  int start = 1;
   while (word != NULL) {
     if (isalpha(word[0]) && !isKeyword(word))
+    {
       makeToken(word, "Identifier", row, start);
-    start = start + strlen(word);
+      }
+    start = start + strlen(word)+1;
     word = strtok(NULL, " \n");
   }
 }
