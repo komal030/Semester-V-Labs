@@ -1,23 +1,26 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <unistd.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<sys/wait.h>
+#include<sys/types.h>
+#include<unistd.h>
+#include<string.h>
 
 int main() {
-  pid_t pid = fork();
-  int status;
+  pid_t id;
+  printf("Fork starting\n");
 
-  if (pid < 0) {
-    printf("\nError Occured");
-    exit(-1);
-  } else if (pid == 0) {
-    printf("Main program child executing\n");
-    execl("/home/oslab/Desktop/210905356/week3/q1", "q1", NULL);
+  id = fork();
+
+  if (id == -1) {
+    printf("Error in forking\n");
     exit(0);
+  } else if (id == 0) {
+    printf("Original child running started\n");
+    execl("/home/komal/Desktop/oslab/lab3/q1", "q1", NULL);
+    printf("Original child done running\n");
   } else {
-    wait( & status);
-    printf("\nMain program parent executing\nChild process returned %d\n", status);
+    wait(NULL);
+    printf("Parent running\n");
   }
+  exit(0);
 }
