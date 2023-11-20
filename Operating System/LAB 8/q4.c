@@ -41,8 +41,8 @@ int main() {
 
   pthread_t thread1;
   pthread_t thread2;
-  pthread_create( & thread1, 0, & thread_odd, (void * ) num -> arr);
-  pthread_create( & thread2, 0, & thread_even, (void * ) num -> arr);
+  pthread_create( & thread1, 0, & thread_odd, (void * ) num );
+  pthread_create( & thread2, 0, & thread_even, (void * ) num );
   int * sumodd = (int * ) malloc(sizeof(int));
   int * sumeven = (int * ) malloc(sizeof(int));
   pthread_join(thread1, (void ** ) &sumodd);
